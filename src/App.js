@@ -5,14 +5,13 @@ import tailwindColors from "./data/tailwindColors";
 const App = () => {
     const [ userColor, setUserColor ] = useState( '#0000ff' );
     const [ outputClass, setOutputClass ] = useState( 'bg-blue-700' );
-    const [ invalidHex, setInvalidHex ] = useState(false);
 
 
     useEffect( () => {
         if (isValidHex( userColor )) {
             setOutputClass( closestHexFromRgb( hexToRgb( userColor ) ) );
         }
-    } )
+    }, [userColor] )
 
     const isValidHex = (color) => {
         let result;
@@ -92,7 +91,6 @@ const App = () => {
                         className={`w-full mb-2 text-4xl text-center backdrop`}
                         value={userColor}
                         onChange={(e) => {
-                            let validate = isValidHex(e.target.value);
                             setUserColor( e.target.value )
                         }}
                         onClick={(e) => {

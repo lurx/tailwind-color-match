@@ -1,31 +1,69 @@
 import './App.css';
 import { useEffect, useState } from "react";
-import tailwindColors from "./data/tailwindColors";
+// import { exported } from "./data/tailwindColors";
+import colors from 'tailwindcss/colors';
 
 const App = () => {
-    const [ userColor, setUserColor ] = useState( '#0000ff' );
-    const [ outputClass, setOutputClass ] = useState( 'bg-blue-700' );
-
+    const [ userColor, setUserColor ] = useState( '#fff1f2' );
+    // const [ userColor, setUserColor ] = useState( '#0000ff' );
+    const [ outputClass, setOutputClass ] = useState( 'bg-rose-50' );
 
     useEffect( () => {
-        if (isValidHex( userColor )) {
-            setOutputClass( closestHexFromRgb( hexToRgb( userColor ) ) );
+        // setUserColor( '#000000');
+        // console.log(colors);
+        const hexValidity = isValidHex( userColor );
+        if (hexValidity[0] === true) {
+            console.log( isValidHex( userColor ) )
         }
-    }, [userColor] )
+
+        let currentColor = '',
+            classString = '';
+
+        Object.entries( colors ).map( ([ key, value ], index) => {
+            currentColor = key;
+            if (value === userColor) {
+                classString = `bg-${currentColor}`;
+                return classString;
+            } else {
+                Object.entries( value ).map( ([ k, v ], index) => {
+                    if (v === userColor) {
+                        classString = `bg-${currentColor}-${k}`
+                        console.log( 'string: ', classString );
+                        return classString;
+                    }
+                } )
+            }
+
+            setOutputClass( classString );
+        } );
+
+        // console.log( x, y );
+
+
+    }, [ userColor ] );
+
+    // useEffect( () => {
+    //     if (isValidHex( userColor )) {
+    //         setOutputClass( closestHexFromRgb( hexToRgb( userColor ) ) );
+    //     }
+    // }, [userColor] )
 
     const isValidHex = (color) => {
-        let result;
+        let result,
+            hexLength = color.length;
         if (!color || typeof color !== 'string') return false;
 
         // Validate hex values
         if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
+        // add # to hex if missing
+        if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
 
-        switch (color.length) {
+        switch (hexLength) {
             case 3:
-                result =  /^[0-9A-F]{3}$/i.test( color );
+                result = /^[0-9A-F]{3}$/i.test( color );
                 break;
             case 6:
-                result =  /^[0-9A-F]{6}$/i.test( color );
+                result = /^[0-9A-F]{6}$/i.test( color );
                 break;
             case 8:
                 result = /^[0-9A-F]{8}$/i.test( color );
@@ -35,10 +73,12 @@ const App = () => {
                 break;
         }
 
-        return result;
+        let res = [ result, hexLength ]
+        console.log( res );
+        return res;
     }
 
-    const hexToRgb = (hex) => {
+    /*const hexToRgb = (hex) => {
         const shortRegEx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
         hex = hex.replace( shortRegEx, function (full, r, g, b) {
             return [ r, r, g, g, b, b ].join();
@@ -51,9 +91,9 @@ const App = () => {
             g: parseInt( rgbArray[2], 16 ),
             b: parseInt( rgbArray[3], 16 )
         } : null;
-    }
+    }*/
 
-    const closestHexFromRgb = (rgbObj) => {
+    /*const closestHexFromRgb = (rgbObj) => {
         if (!rgbObj) {
             return false;
         }
@@ -75,7 +115,7 @@ const App = () => {
         }
 
         return tailwindColors.find( element => element.hex === nearestHex ).name;
-    }
+    }*/
 
     return (
         <div className="w-full h-screen grid grid-cols-2">

@@ -1,21 +1,12 @@
 import './App.css';
 import { useEffect, useState } from "react";
-// import { exported } from "./data/tailwindColors";
 import colors from 'tailwindcss/colors';
 
 const App = () => {
     const [ userColor, setUserColor ] = useState( '#fff1f2' );
-    // const [ userColor, setUserColor ] = useState( '#0000ff' );
     const [ outputClass, setOutputClass ] = useState( 'bg-rose-50' );
 
     useEffect( () => {
-        // setUserColor( '#000000');
-        // console.log(colors);
-        const hexValidity = isValidHex( userColor );
-        if (hexValidity[0] === true) {
-            console.log( isValidHex( userColor ) )
-        }
-
         let currentColor = '',
             classString = '';
 
@@ -37,46 +28,37 @@ const App = () => {
             setOutputClass( classString );
         } );
 
-        // console.log( x, y );
-
-
     }, [ userColor ] );
 
-    // useEffect( () => {
-    //     if (isValidHex( userColor )) {
-    //         setOutputClass( closestHexFromRgb( hexToRgb( userColor ) ) );
+    // const isValidHex = (color) => {
+    //     let result,
+    //         hexLength = color.length;
+    //     if (!color || typeof color !== 'string') return false;
+    //
+    //     // Validate hex values
+    //     if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
+    //     // add # to hex if missing
+    //     if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
+    //
+    //     switch (hexLength) {
+    //         case 3:
+    //             result = /^[0-9A-F]{3}$/i.test( color );
+    //             break;
+    //         case 6:
+    //             result = /^[0-9A-F]{6}$/i.test( color );
+    //             break;
+    //         case 8:
+    //             result = /^[0-9A-F]{8}$/i.test( color );
+    //             break;
+    //         default:
+    //             result = false;
+    //             break;
     //     }
-    // }, [userColor] )
-
-    const isValidHex = (color) => {
-        let result,
-            hexLength = color.length;
-        if (!color || typeof color !== 'string') return false;
-
-        // Validate hex values
-        if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
-        // add # to hex if missing
-        if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
-
-        switch (hexLength) {
-            case 3:
-                result = /^[0-9A-F]{3}$/i.test( color );
-                break;
-            case 6:
-                result = /^[0-9A-F]{6}$/i.test( color );
-                break;
-            case 8:
-                result = /^[0-9A-F]{8}$/i.test( color );
-                break;
-            default:
-                result = false;
-                break;
-        }
-
-        let res = [ result, hexLength ]
-        console.log( res );
-        return res;
-    }
+    //
+    //     let res = [ result, hexLength ]
+    //     console.log( res );
+    //     return res;
+    // }
 
     /*const hexToRgb = (hex) => {
         const shortRegEx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;

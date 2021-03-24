@@ -16,12 +16,11 @@ const App = () => {
                 classString = `bg-${currentColor}`;
                 return classString;
             } else {
-                Object.entries( value ).map( ([ k, v ], index) => {
+                 Object.entries( value ).map( ([ k, v ], index) => {
                     if (v === userColor) {
                         classString = `bg-${currentColor}-${k}`
-                        console.log( 'string: ', classString );
                         return classString;
-                    }
+                    } else return v
                 } )
             }
 
@@ -30,35 +29,35 @@ const App = () => {
 
     }, [ userColor ] );
 
-    // const isValidHex = (color) => {
-    //     let result,
-    //         hexLength = color.length;
-    //     if (!color || typeof color !== 'string') return false;
-    //
-    //     // Validate hex values
-    //     if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
-    //     // add # to hex if missing
-    //     if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
-    //
-    //     switch (hexLength) {
-    //         case 3:
-    //             result = /^[0-9A-F]{3}$/i.test( color );
-    //             break;
-    //         case 6:
-    //             result = /^[0-9A-F]{6}$/i.test( color );
-    //             break;
-    //         case 8:
-    //             result = /^[0-9A-F]{8}$/i.test( color );
-    //             break;
-    //         default:
-    //             result = false;
-    //             break;
-    //     }
-    //
-    //     let res = [ result, hexLength ]
-    //     console.log( res );
-    //     return res;
-    // }
+    /*const isValidHex = (color) => {
+        let result,
+            hexLength = color.length;
+        if (!color || typeof color !== 'string') return false;
+
+        // Validate hex values
+        if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
+        // add # to hex if missing
+        if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
+
+        switch (hexLength) {
+            case 3:
+                result = /^[0-9A-F]{3}$/i.test( color );
+                break;
+            case 6:
+                result = /^[0-9A-F]{6}$/i.test( color );
+                break;
+            case 8:
+                result = /^[0-9A-F]{8}$/i.test( color );
+                break;
+            default:
+                result = false;
+                break;
+        }
+
+        let res = [ result, hexLength ]
+        console.log( res );
+        return res;
+    }*/
 
     /*const hexToRgb = (hex) => {
         const shortRegEx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;

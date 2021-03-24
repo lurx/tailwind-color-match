@@ -10,22 +10,24 @@ const App = () => {
         let currentColor = '',
             classString = '';
 
-        Object.entries( colors ).map( ([ key, value ], index) => {
+        classString = Object.entries( colors ).map( ([ key, value ], index) => {
             currentColor = key;
+            let str = '';
             if (value === userColor) {
-                classString = `bg-${currentColor}`;
-                return classString;
+                str += `bg-${currentColor}`;
+                return str;
             } else {
+                debugger;
                  Object.entries( value ).map( ([ k, v ], index) => {
                     if (v === userColor) {
-                        classString = `bg-${currentColor}-${k}`
-                        return classString;
+                        str += `bg-${currentColor}-${k}`
+                        return str;
                     } else return v
                 } )
             }
-
-            setOutputClass( classString );
+            return str;
         } );
+        setOutputClass( classString );
 
     }, [ userColor ] );
 

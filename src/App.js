@@ -16,7 +16,7 @@ const App = () => {
             console.log(item);
             return ''
         })
-        setOutputClass('lalal');
+        setOutputClass('bg-rose-50');
         console.log( stringColors, unused );
 
         // add # to hex if missing
@@ -157,9 +157,10 @@ const App = () => {
             </div>
             <div className={`flex items-center justify-center ${outputClass}`}>
                 <div className="backdrop py-2 px-4 inner-shadow rounded-md text-gray-500 font-mono leading-10 text-2xl">
-                    {/*{'<'}*/}
+                    {'<'}
                     MyComponent
-                    <span className="italic text-white"><span
+                    <span className="italic text-white ml-2">
+                        className=&quot;<span
                     className="text-yellow-300">{outputClass}</span>&quot;</span>{' />'}
                 </div>
 

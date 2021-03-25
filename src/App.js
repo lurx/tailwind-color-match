@@ -1,33 +1,63 @@
+// import React from 'react';
 import './App.css';
-import { useEffect, useState } from "react";
+
+import { useEffect, useState } from 'react';
 import colors from 'tailwindcss/colors';
+import { includes } from 'lodash-es'
 
 const App = () => {
     const [ userColor, setUserColor ] = useState( '#fff1f2' );
     const [ outputClass, setOutputClass ] = useState( 'bg-rose-50' );
 
     useEffect( () => {
-        let currentColor = '',
-            classString = '';
+        // let classString;
+        let stringColors = [];
+        const unused = Object.values(colors).map(item => {
+            console.log(item);
+            return ''
+        })
+        setOutputClass('lalal');
+        console.log( stringColors, unused );
 
-        classString = Object.entries( colors ).map( ([ key, value ], index) => {
-            currentColor = key;
-            let str = '';
-            if (value === userColor) {
-                str += `bg-${currentColor}`;
-                return str;
+        // add # to hex if missing
+        if (userColor.charAt( 0 ) !== '#') {
+            setUserColor( '#' + userColor )
+        }
+
+        // if (userColor.length <= 2) {
+        //     setOutputClass( '' );
+        // }
+        // console.log(Object.entries( colors ))
+
+        console.log( includes( colors, userColor ) );
+
+        /*classString = Object.entries( colors ).map( (item) => {
+            const [ currentColor, hex ] = item
+            // let output;
+
+            if (typeof hex === 'string') {
+                if (hex === userColor) {
+                    return`bg-${currentColor}`;
+                } return item
             } else {
-                debugger;
-                 Object.entries( value ).map( ([ k, v ], index) => {
-                    if (v === userColor) {
-                        str += `bg-${currentColor}-${k}`
-                        return str;
-                    } else return v
+                Object.entries( hex ).map( ([ shade, nestedHex ]) => {
+                    // debugger
+                    if (nestedHex === userColor) {
+                        return `bg-${currentColor}-${shade}`
+                    } return item
                 } )
+                return item
             }
-            return str;
         } );
-        setOutputClass( classString );
+        classString.map(item => {
+            if (typeof item === 'string') {
+                debugger;
+                setOutputClass( item );
+            }
+            return item
+        } )*/
+
+
 
     }, [ userColor ] );
 
@@ -116,7 +146,7 @@ const App = () => {
                         onChange={(e) => {
                             setUserColor( e.target.value )
                         }}
-                        onClick={(e) => {
+                        onFocus={(e) => {
                             e.target.value = '';
                         }}
                     />
@@ -127,8 +157,10 @@ const App = () => {
             </div>
             <div className={`flex items-center justify-center ${outputClass}`}>
                 <div className="backdrop py-2 px-4 inner-shadow rounded-md text-gray-500 font-mono leading-10 text-2xl">
-                    {'<'}MyComponent <span className="italic text-white">className="<span
-                    className="text-yellow-300">{outputClass}</span>"</span>{' />'}
+                    {/*{'<'}*/}
+                    MyComponent
+                    <span className="italic text-white"><span
+                    className="text-yellow-300">{outputClass}</span>&quot;</span>{' />'}
                 </div>
 
             </div>

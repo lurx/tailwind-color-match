@@ -122,7 +122,7 @@ const App = () => {
                 style={{ backgroundColor: userColor }}
             >
                 <div
-                    className={`p-20 rounded-xl w-1/2 text-blue-50 backdrop ${isValidHex ? '' : 'border-red-600 border-2'}`}>
+                    className={`p-20 rounded-xl w-1/2 text-blue-50 backdrop border-2 transition duration-300 transition-border ${isValidHex ? 'border-transparent' : 'border-red-600'}`}>
                     <p className="mb-2 text-xl">Input your color.</p>
                     <input
                         id="rotem"
@@ -139,7 +139,7 @@ const App = () => {
                     <div className="flex justify-end">
                         <div className="footnote text-xs">(6 Character HEX code)</div>
                     </div>
-                    <p className={`my-2 text-red-500 ${isValidHex ? 'hidden' : ''}`}>Please Enter a valid HEX code</p>
+                    <p className={`my-2 text-red-500 transition transition-all duration-300 ${isValidHex ? 'text-opacity-0' : 'text-opacity-1'}`}>Please Enter a valid HEX code</p>
                 </div>
             </div>
             <div className={`flex items-center justify-center ${outputClass}`}>

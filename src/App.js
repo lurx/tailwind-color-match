@@ -70,6 +70,15 @@ const App = () => {
                 break;
         }
 
+        if (res.length === 6) {
+            if(color === 'ffffff') {
+                setUserColor('fff');
+            }
+            if(color === '000000') {
+                setUserColor('000');
+            }
+        }
+
         setIsValidHex(res.valid);
 
         return res;

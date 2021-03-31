@@ -1,11 +1,12 @@
 import './App.css';
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import colors from 'tailwindcss/colors';
 
 const App = () => {
     const [ userColor, setUserColor ] = useState( '#fff1f2' );
-    const [ outputClass, setOutputClass ] = useState( 'bg-rose-50' );
+    const [outputClass, setOutputClass] = useState('bg-rose-50');
+    const [isValidHex, setIsValidHex] = useState(true);
 
     const findOutputClass = () => {
         let classString = '';
@@ -34,46 +35,46 @@ const App = () => {
 
     useEffect( () => {
         // add # to hex if missing
+        console.log(validateHex(userColor));
         if (userColor.charAt( 0 ) !== '#') {
-            setUserColor( '#' + userColor )
+            setUserColor(`#${userColor}`);
         }
 
         if (userColor.length <= 2) {
-            setOutputClass( '' );
+            setOutputClass('');
         }
 
         findOutputClass();
-    }, [ userColor ] );
+    }, [userColor]);
 
-    /*const isValidHex = (color) => {
-        let result,
-            hexLength = color.length;
+    const validateHex = (color) => {
+        const res = {};
         if (!color || typeof color !== 'string') return false;
 
         // Validate hex values
-        if (color.substring( 0, 1 ) === '#') color = color.substring( 1 );
-        // add # to hex if missing
-        if (userColor.charAt(0) !== '#') { setUserColor('#'+userColor) }
+        if (color.substring(0, 1) === '#') color = color.substring(1);
 
-        switch (hexLength) {
+        res.length = color.length;
+        switch (color.length) {
             case 3:
-                result = /^[0-9A-F]{3}$/i.test( color );
+                res.valid = /^[0-9A-F]{3}$/i.test(color);
                 break;
             case 6:
-                result = /^[0-9A-F]{6}$/i.test( color );
+                res.valid = /^[0-9A-F]{6}$/i.test(color);
                 break;
             case 8:
-                result = /^[0-9A-F]{8}$/i.test( color );
+                res.valid = /^[0-9A-F]{8}$/i.test(color);
                 break;
             default:
-                result = false;
+                res.valid = false;
                 break;
         }
 
-        let res = [ result, hexLength ]
-        console.log( res );
+        setIsValidHex(res.valid);
+
         return res;
-    }*/
+        // return false;
+    };
 
     /*const hexToRgb = (hex) => {
         const shortRegEx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -120,7 +121,8 @@ const App = () => {
                 className={`flex flex-col justify-center items-center p-4 transition transition-500`}
                 style={{ backgroundColor: userColor }}
             >
-                <div className="p-20 rounded-xl w-1/2 text-blue-50 backdrop">
+                <div
+                    className={`p-20 rounded-xl w-1/2 text-blue-50 backdrop ${isValidHex ? '' : 'border-red-600 border-2'}`}>
                     <p className="mb-2 text-xl">Input your color.</p>
                     <input
                         id="rotem"
@@ -128,7 +130,7 @@ const App = () => {
                         className={`w-full mb-2 text-4xl text-center backdrop`}
                         value={userColor}
                         onChange={(e) => {
-                            setUserColor( e.target.value )
+                            setUserColor(e.target.value);
                         }}
                         onFocus={(e) => {
                             e.target.value = '';
@@ -137,6 +139,7 @@ const App = () => {
                     <div className="flex justify-end">
                         <div className="footnote text-xs">(6 Character HEX code)</div>
                     </div>
+                    <p className={`my-2 text-red-500 ${isValidHex ? 'hidden' : ''}`}>Please Enter a valid HEX code</p>
                 </div>
             </div>
             <div className={`flex items-center justify-center ${outputClass}`}>

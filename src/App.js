@@ -1,64 +1,48 @@
-// import React from 'react';
 import './App.css';
 
 import { useEffect, useState } from 'react';
 import colors from 'tailwindcss/colors';
-import { includes } from 'lodash-es'
 
 const App = () => {
     const [ userColor, setUserColor ] = useState( '#fff1f2' );
     const [ outputClass, setOutputClass ] = useState( 'bg-rose-50' );
 
-    useEffect( () => {
-        // let classString;
-        let stringColors = [];
-        const unused = Object.values(colors).map(item => {
-            console.log(item);
+    const findOutputClass = () => {
+        let classString = '';
+        const colorNames = Object.keys(colors);
+
+        Object.values(colors).map((shades, index) => {
+            const currentColor = colorNames[index];
+            if (currentColor === 'black' || currentColor === 'white') {
+                if (userColor === shades) {
+                    classString = `bg-${currentColor}`;
+                }
+            } else {
+                Object.keys(shades).map((val)=>{
+                    if (userColor === colors[currentColor][val]) {
+                        console.log(currentColor);
+                        console.log(`bg-${currentColor}-${val}`);
+                        classString = `bg-${currentColor}-${val}`;
+                    }
+                })
+
+            }
+            setOutputClass(classString);
             return ''
         })
-        setOutputClass('bg-rose-50');
-        console.log( stringColors, unused );
+    }
 
+    useEffect( () => {
         // add # to hex if missing
         if (userColor.charAt( 0 ) !== '#') {
             setUserColor( '#' + userColor )
         }
 
-        // if (userColor.length <= 2) {
-        //     setOutputClass( '' );
-        // }
-        // console.log(Object.entries( colors ))
+        if (userColor.length <= 2) {
+            setOutputClass( '' );
+        }
 
-        console.log( includes( colors, userColor ) );
-
-        /*classString = Object.entries( colors ).map( (item) => {
-            const [ currentColor, hex ] = item
-            // let output;
-
-            if (typeof hex === 'string') {
-                if (hex === userColor) {
-                    return`bg-${currentColor}`;
-                } return item
-            } else {
-                Object.entries( hex ).map( ([ shade, nestedHex ]) => {
-                    // debugger
-                    if (nestedHex === userColor) {
-                        return `bg-${currentColor}-${shade}`
-                    } return item
-                } )
-                return item
-            }
-        } );
-        classString.map(item => {
-            if (typeof item === 'string') {
-                debugger;
-                setOutputClass( item );
-            }
-            return item
-        } )*/
-
-
-
+        findOutputClass();
     }, [ userColor ] );
 
     /*const isValidHex = (color) => {
